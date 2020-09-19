@@ -1,0 +1,26 @@
+.landing-page {
+  display: flex;
+  align-items: center;
+  height: 89vh;
+}
+
+.landing-page__content {
+  width: 50%;
+}
+
+.landing-page__content h1 {
+  font-weight: 700;
+}
+.landing-page__content p {
+  font-weight: 400;
+  text-align: left;
+}
+
+@media (max-width: 45rem) {
+  .landing-page {
+    justify-content: center;
+  }
+  .landing-page__content {
+    width: 100%;
+  }
+}
