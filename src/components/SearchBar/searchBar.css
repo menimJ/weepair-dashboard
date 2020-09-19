@@ -1,0 +1,21 @@
+.search-btn {
+  background-color: #ffbbd9;
+  /* border: none; */
+}
+
+.search__input {
+  padding: 0.375rem 1.3rem;
+  border: 1px solid #333;
+  outline-style: none;
+  border-radius: 0.2rem;
+}
+
+.search__input:hover {
+  outline-style: none;
+}
+
+@media (max-width: 45rem) {
+  .search__input {
+    padding: 0.375rem 1rem;
+  }
+}
