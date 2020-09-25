@@ -14,10 +14,10 @@ const Header = () => {
         </Link>
 
         <div className="nav__options">
-          <a href="" className="nav__options__links">
+          <Link href="" className="nav__options__links">
             {" "}
             Learn More
-          </a>
+          </Link>
           <Link to={login} className="nav__options__links link-btn-outline">
             Get Started
           </Link>

@@ -17,5 +17,6 @@
 @media (max-width: 45rem) {
   .search__input {
     padding: 0.375rem 1rem;
+    width: 250px;
   }
 }

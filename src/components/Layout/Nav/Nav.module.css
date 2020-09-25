@@ -1,0 +1,23 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .nav__logo {
+    height: 4rem;
+    width: 4rem;
+    cursor: pointer;
+  }
+  
+  .nav__options__links {
+    margin-left: 1rem;
+    color: #333;
+    border-radius: 4px;
+  }
+  
+  .nav__options__links:hover {
+    color: #333;
+    text-decoration: none;
+  }
+  
