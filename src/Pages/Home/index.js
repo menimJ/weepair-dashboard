@@ -1,8 +1,8 @@
 import React from "react";
-import "./landingPage.css";
+import "./home.css";
 import SearchBar from "../../components/SearchBar";
 
-const LandingPage = () => {
+const Home = () => {
   return (
     <main className="landing-page container">
       <div className="landing-page__content">
@@ -17,4 +17,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Home;

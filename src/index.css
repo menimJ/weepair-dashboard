@@ -22,7 +22,7 @@ code {
 }
 
 :root {
-  --vertical-height: 92vh;
+  --vertical-height: 100vh;
   --btn-color: #ffbbd9;
 }
 
@@ -44,6 +44,10 @@ code {
 
 .top-buttom-margin {
   margin: 1em 0;
+}
+
+.top-margin {
+  margin-top: 1em;
 }
 
 .center-column-item {

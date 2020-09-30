@@ -1,0 +1,37 @@
+.login-page__form h1 {
+  font-weight: 700;
+}
+.login-page__form {
+  padding: 2em 0;
+  width: 40%;
+  max-width: 20rem;
+  border-radius: 0.8rem;
+  background-color: #ffee;
+}
+.login-page__form__input {
+  width: 80%;
+}
+.login-page__form__input__link {
+  color: #a1173c;
+  text-decoration: none;
+}
+.login-page__form__input__link:hover,
+.login-page__form__input__link:focus {
+  text-decoration: none;
+  color: #a1173c;
+}
+
+@media (max-width: 50rem) {
+  .login-page__content {
+    display: none;
+  }
+  .login-page__form {
+    width: 60%;
+  }
+}
+
+@media (max-width: 30rem) {
+  .login-page__form {
+    width: 80%;
+  }
+}

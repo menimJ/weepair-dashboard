@@ -1,0 +1,11 @@
+.login-page__form h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 30rem) {
+  .login-page__form h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+}
