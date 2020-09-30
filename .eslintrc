@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "standard",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "plugin:unicorn/recommended",
+    "prettier/babel",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/unicorn",
+    "prettier"
+  ],
+  "plugins": ["babel", "flowtype", "react", "standard", "unicorn"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  }
+}

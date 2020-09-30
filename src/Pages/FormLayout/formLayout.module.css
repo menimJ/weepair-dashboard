@@ -7,21 +7,8 @@
   flex-wrap: wrap;
 }
 
-.login-page__form h1 {
-  font-weight: 700;
-}
-.login-page__form {
-  height: 70%;
-  width: 40%;
-  max-width: 25rem;
-  border-radius: 0.8rem;
-  background-color: #ffee;
-}
-.login-page__form__input {
-  width: 80%;
-}
 .login-page__content {
-  height: 50%;
+  /* height: 50%; */
   border-radius: 0.8rem 0 0 0.8rem;
   background-color: pink;
 }
@@ -34,6 +21,7 @@
   gap: 1em;
   margin: 1em 0;
   padding: 0 1em;
+  cursor: pointer;
 }
 .left-padding {
   padding-left: 2.5rem;
@@ -47,14 +35,5 @@
 @media (max-width: 50rem) {
   .login-page__content {
     display: none;
-  }
-  .login-page__form {
-    width: 60%;
-  }
-}
-
-@media (max-width: 30rem) {
-  .login-page__form {
-    width: 80%;
   }
 }

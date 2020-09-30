@@ -1,15 +1,19 @@
 import React from "react";
-import "./searchBar.css";
+import classes from "./searchBar.module.css";
+import classnames from "classnames";
 
 const SearchBar = () => {
   return (
-    <div className="search">
+    <div className={classes["search"]}>
       <input
         type="search"
         placeholder="Enter Group id"
-        className="search__input"
+        className={classes["search__input"]}
       />
-      <button type="submit" className="btn search-btn left-margin">
+      <button
+        type="submit"
+        className={classnames("btn left-margin", classes["search-btn"])}
+      >
         {" "}
         Search
       </button>

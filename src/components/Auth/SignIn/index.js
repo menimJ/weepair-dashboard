@@ -1,6 +1,7 @@
 import React from "react";
-import "./login.css";
-const Login = () => {
+import BlockButton from "../../BlockButton";
+
+const SignIn = () => {
   return (
     <form className="login-component-form">
       {/* <fieldset disabled></fieldset> */}
@@ -28,15 +29,11 @@ const Login = () => {
         <div id="passwordValidation" className="invalid-feedback">
           invalid email/password.
         </div>
-        <button
-          type="submit"
-          class=" block-button btn btn-block top-buttom-margin"
-        >
-          Sign in
-        </button>
+
+        <BlockButton text={"Sign in"} />
       </fieldset>
     </form>
   );
 };
 
-export default Login;
+export default SignIn;
