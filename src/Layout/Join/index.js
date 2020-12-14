@@ -1,6 +1,6 @@
 import React from "react"
 import clsx from "clsx"
-// material ui imports 
+// material ui imports
 import { makeStyles } from "@material-ui/core/styles"
 import NavBar from "../../components/NavBar"
 import Container from "@material-ui/core/Container"
@@ -12,13 +12,11 @@ import Button from "@material-ui/core/Button"
 import { deepOrange } from "@material-ui/core/colors"
 
 // application imports
-import { addUserToGroup } from "../../api/groups"
-import { getGroupID } from "../../localStorage/groups"
-import { useHistory ,withRouter} from "react-router-dom"
-import { HOME } from "../../urls"
+import { addUserToGroup, verifyGroupID } from "../../api/groups"
+import { useHistory } from "react-router-dom"
+import { HOME, PAGE_NOT_FOUND } from "../../urls"
 import Loading from "../../components/Loading"
-import {handleNotification} from "../../utils/general"
-
+import { handleNotification } from "../../utils/general"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,11 +46,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     gap: theme.spacing(3),
   },
+
+  centerPage: {
+    height: "100vh",
+    width: "100vw",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }))
 
 export default function Join(props) {
   const classes = useStyles()
-  let history = useHistory()
+
+  const history = useHistory()
+  const groupId = props.match.params.id
+  const [loading, setLoading] = React.useState(true)
+
   const [value, setValue] = React.useState({
     userName: "",
     comment: "",
@@ -62,41 +72,61 @@ export default function Join(props) {
     errorMessage: "",
   })
 
+  async function groupVerification() {
+    const verified = await verifyGroupID(groupId)
+    setLoading(false)
+    if (!verified) {
+      history.push(PAGE_NOT_FOUND + "/INVALID_GROUP_ID_OR_LINK")
+    }
+  }
 
+  React.useEffect(() => {
+    groupVerification()
+  }, [])
 
   const handleUserInput = (name) => (event) =>
     setValue({ ...value, [name]: event.target.value })
 
   const success = () => {
     setValue({ ...value, loading: false })
-    handleNotification("SUCCESSFUL","You've successfully joined the group","success")
+    handleNotification(
+      "SUCCESSFUL",
+      "You've successfully joined the group",
+      "success"
+    )
     history.push(HOME)
   }
 
-  const failed = (message) =>{
-    console.log("failed",message)
+  const failed = (message) => {
+    console.log("failed", message)
     setValue({ ...value, loading: false, errorMessage: message })
-    handleNotification("FAILED",message)
+    handleNotification("FAILED", message)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setValue({ ...value, loading: true })
-    const groupId = props.match.params.id
     if (groupId) {
       const member = {
         username: value.userName,
         comment: value.comment,
         name: value.name,
-        link: value.link
+        link: value.link,
       }
-      addUserToGroup(groupId, member,success,failed)
+      addUserToGroup(groupId, member, success, failed)
     } else {
       history.push(HOME)
     }
   }
 
-  return (
+  return loading ? (
+    <div className={classes.root}>
+      <NavBar />
+      <div className={classes.centerPage}>
+        <Loading message={"FETCHING GROUP..."} />
+      </div>
+    </div>
+  ) : (
     <div className={classes.root}>
       <NavBar />
       <section className={classes.center}>
@@ -155,7 +185,7 @@ export default function Join(props) {
                 required
               />
 
-               <TextField
+              <TextField
                 id="outlined-full-width-3"
                 label="Product Url"
                 placeholder="jumia.com/cool-stuff/99"

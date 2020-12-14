@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
-import FormDialog from "../FormDialog"
+import ViewMatch from "../ViewMatch"
 import { Link } from "react-router-dom"
 import { HOME } from "../../urls"
 
@@ -45,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar() {
   const [open, setOpen] = React.useState(false)
-  // const [navOpen,setNavOpen] = React.useState(false)
-  // const [anchorEl, setAnchorEl] = React.useState(null);
   
   const classes = useStyles()
   const handleClickOpen = () => {
@@ -58,7 +56,7 @@ export default function NavBar() {
 
   return (
     <React.Fragment>
-      <FormDialog open={open} handleClose={handleClose} />
+      <ViewMatch open={open} handleClose={handleClose} />
       <div className={classes.root}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>

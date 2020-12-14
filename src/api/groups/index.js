@@ -29,4 +29,11 @@ export function createGroup(details, success, failed) {
     .catch((err) => failed(err.response.data.message))
 }
 
+export function verifyGroupID(groupID) {
+  return axios
+    .get(baseUrl + "groups/" + groupID)
+    .then((res) => res.data.success)
+    .catch((err) => err.response.data.success)
+}
+
 // verify group id

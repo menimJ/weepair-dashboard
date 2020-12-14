@@ -15,11 +15,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import GroupIcon from "@material-ui/icons/Group"
 
-// import { storeGroupID } from "../../localStorage/groups"
+
 import { useHistory } from "react-router-dom"
 import { JOIN } from "../../urls"
 
 import CreateDialog from "../../components/CreateDialog"
+import { generateGroupId } from "../../utils/general"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -113,7 +114,7 @@ export default function Home() {
   const [openDialog, setOpenDialog] = React.useState(false)
   const [openCloseGroupDialog, setOpenCloseGroupDialog] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const [groupId, setGroupId] = useState("")
+  const [groupDetails, setGroupDetails] = useState("")
 
   const open = Boolean(anchorEl)
   let history = useHistory()
@@ -125,11 +126,11 @@ export default function Home() {
   function join (){
     // verifyGroup 
     // if groupIsValid do stuff
+    const groupId=generateGroupId(groupDetails)
     if(groupId){
-    // storeGroupID("groupId", groupId)
-    history.push(JOIN+"/"+groupId)
+      history.push(JOIN+"/"+groupId)
     }
-    
+
   }
 
   const handleSubmit = (e) => {
@@ -139,7 +140,7 @@ export default function Home() {
   }
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget)
-  const handleChange = (event) => setGroupId(event.target.value)
+  const handleChange = (event) => setGroupDetails(event.target.value)
 
 
   const handleClickOpen = () => {
@@ -222,7 +223,8 @@ export default function Home() {
                       label="GROUP ID"
                       id="outlined-start-adornment"
                       style={{ width: "100%" }}
-                      value={groupId}
+                      value={groupDetails}
+                      placeholder={"Enter group link or ID"}
                       onChange={handleChange}
                       InputProps={{
                         startAdornment: (
@@ -230,6 +232,9 @@ export default function Home() {
                             <KeyboardIcon />
                           </InputAdornment>
                         ),
+                        style:{
+                          fontSize:"0.9rem"
+                        }
                       }}
                       variant="outlined"
                     />

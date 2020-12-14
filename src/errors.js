@@ -1,0 +1,1 @@
+export const INVALID_GROUP_ID = "INVALID_GROUP_ID"

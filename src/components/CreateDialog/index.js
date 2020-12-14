@@ -143,7 +143,7 @@ export default function CreateDialog({open, handleClose }) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            <div className={classes.centerText}>{"Please copy your Group ID"}</div>
+            <div className={classes.centerText}>{"Please copy your Wee link"}</div>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">

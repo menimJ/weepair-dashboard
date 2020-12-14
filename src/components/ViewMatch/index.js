@@ -12,11 +12,13 @@ import { green } from "@material-ui/core/colors"
 import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import { Typography } from "@material-ui/core"
+
 // relative imports
 import Loading from "../Loading"
 import { viewMatch } from "../../api/groups"
+
 // 3rd party
-import { handleNotification } from "../../utils/general"
+import { handleNotification, generateGroupId } from "../../utils/general"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -56,8 +58,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
 }))
-export default function FormDialog({ open, handleClose }) {
+export default function ViewMatch({ open, handleClose }) {
   const classes = useStyles()
+
+
   const [data, setData] = React.useState({
     username: "",
     groupID: "",
@@ -74,14 +78,11 @@ export default function FormDialog({ open, handleClose }) {
 
   const loadData = () => {
     setState({ ...state, loading: true })
-    console.log({ username: data.username, groupID: data.groupID })
-
     const details = {
       username: data.username,
-      groupID: data.groupID,
+      groupID: generateGroupId(data.groupID),
     }
     viewMatch(details, success, failed)
-    // setTimeout(() => setState(...state, (state.loading = false)), 5000)
   }
 
   const handleUserInput = (name) => (event) =>
@@ -106,8 +107,6 @@ export default function FormDialog({ open, handleClose }) {
   }
 
   const PairInfo = ({ name, comment, link }) => {
-    // const { name, comment, link } = state.partnerInfo
-    console.log(name, comment, link, "working")
     return (
       <Dialog
         fullWidth={true}
@@ -144,6 +143,7 @@ export default function FormDialog({ open, handleClose }) {
                       target="_blank"
                       className={classes.removeDecoration}
                       href={"https://" + link}
+                      rel="noopener noreferrer"
                     >
                       LINK
                     </a>
@@ -188,7 +188,7 @@ export default function FormDialog({ open, handleClose }) {
         <TextField
           margin="normal"
           id="name"
-          label="Group ID"
+          label="Group ID or Link"
           type="text"
           fullWidth
           required

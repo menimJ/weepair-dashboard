@@ -2,11 +2,12 @@ import "./App.css"
 import React from "react"
 import Home from "./Layout/Home"
 import Join from "./Layout/Join"
+import NotFound from "./components/NotFound"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import ReactNotification from "react-notifications-component"
 import "react-notifications-component/dist/theme.css"
 
-import { JOIN, HOME, CREATE } from "./urls"
+import { JOIN, HOME, PAGE_NOT_FOUND } from "./urls"
 
 function App() {
   return (
@@ -15,9 +16,9 @@ function App() {
       <Router>
         <Switch>
           <Route path={HOME} exact component={Home} />
-          {/* <Route path={JOIN} exact component={Join} /> */}
           <Route path={JOIN + "/:id"} exact component={Join} />
-          <Route path={CREATE} exact component={Join} />
+          <Route path={PAGE_NOT_FOUND} exact component={NotFound} />
+          <Route path={PAGE_NOT_FOUND + "/:message"} exact component={NotFound} />
         </Switch>
       </Router>
     </React.Fragment>
