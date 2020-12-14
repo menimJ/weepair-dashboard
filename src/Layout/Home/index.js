@@ -164,16 +164,17 @@ export default function Home() {
               Maybe it's a special day for secret santa
             </Typography>
             <Typography variant="p" className={classes.paragraph}>
-              We, know it can be very hard connecting with your collegues remotely so
-              we designed this specially for you.
+              It works, the exact same way google meets does. {""} 
             </Typography>
             <Typography variant="p" className={classes.paragraph}>
-              We, know it can be very hard connecting with your collegues remotely so
-              we designed this specially for you.
+             Only difference is, our links come with actual gifts.{""}
             </Typography>
             <Typography variant="p" className={classes.paragraph}>
-              We, know it can be very hard connecting with your collegues remotely so
-              we designed this specially for you.
+              We, know it pretty difficult connecting with your collegues remotely so
+              we designed this specially for you. {""}
+            </Typography>
+            <Typography variant="p" className={classes.paragraph}>
+              Give us a username and we'll give you a suprise. 
             </Typography>
 
             <div className={classes.buttonLayout}>
@@ -212,7 +213,7 @@ export default function Home() {
                   <ListItemIcon>
                     <GroupIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText primary="Close Group" />
+                  <ListItemText primary="Activate Group" />
                 </MenuItem>
               </Menu>
 

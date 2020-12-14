@@ -26,10 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   removeDecoration: {
-    // color:"#333",
     textDecoration: "none",
     "&:hover": {
-      // color:"#333"
+      textDecoration: "none",
     },
   },
 
@@ -61,12 +60,15 @@ const useStyles = makeStyles((theme) => ({
 export default function ViewMatch({ open, handleClose }) {
   const classes = useStyles()
 
-
-  const [data, setData] = React.useState({
+  const initialData = {
     username: "",
     groupID: "",
+  }
+  const [data, setData] = React.useState({
+    ...initialData
   })
-  const [state, setState] = React.useState({
+
+  const initialState = {
     loading: false,
     pairInfo: false,
     partnerInfo: {
@@ -74,7 +76,16 @@ export default function ViewMatch({ open, handleClose }) {
       comment: "",
       link: "",
     },
+  }
+
+  const [state, setState] = React.useState({
+    ...initialState,
   })
+
+  React.useEffect(() => {
+    setState({ ...initialState })
+    setData({...initialData})
+  }, [open])
 
   const loadData = () => {
     setState({ ...state, loading: true })
@@ -99,7 +110,7 @@ export default function ViewMatch({ open, handleClose }) {
         link,
       },
     })
-    handleNotification("success", "izz working oon", "success")
+    handleNotification("CONGRATULATIONS", "You've got a match!!", "success")
   }
   const failed = (message) => {
     handleNotification("FAILED", message)
