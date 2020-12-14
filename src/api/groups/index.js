@@ -28,3 +28,5 @@ export function createGroup(details, success, failed) {
     })
     .catch((err) => failed(err.response.data.message))
 }
+
+// verify group id

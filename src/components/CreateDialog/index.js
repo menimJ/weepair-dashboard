@@ -1,8 +1,10 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import clsx from "clsx"
-import Typography from "@material-ui/core/Typography"
 
+
+import InputAdornment from "@material-ui/core/InputAdornment"
+import FileCopyIcon from "@material-ui/icons/FileCopy"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import Dialog from "@material-ui/core/Dialog"
@@ -11,36 +13,76 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 
-
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 import { createGroup } from "../../api/groups"
-// import GroupCreated from "../GroupCreated"
-import { HOME } from "../../urls"
-import { handleNotification } from "../../utils/general"
+import { HOME, JOIN } from "../../urls"
+import {
+  handleNotification,
+  copyToClipboard,
+  generateGroupLink,
+} from "../../utils/general"
 import Loading from "../Loading"
+import teal from "@material-ui/core/colors/teal"
 
 
 const useStyles = makeStyles((theme) => ({
-    title: {
-      fontSize: "2.45rem",
-      fontWeight: "400",
-      letterSpacing: "0",
-      lineHeight: "3.25rem",
-      paddingBottom: ".5em",
-    },
-    centerText: {
+  centerText: {
+    textAlign: "center",
+  },
+
+  root: {
+    "& .MuiInputBase-input": {
       textAlign: "center",
     },
-  }))
+  },
 
+  listRoot: {
+    width: "100%",
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
 
-export default function CreateDialog({ open, handleClose }) {
+  inline: {
+    display: "inline-block",
+    backgroundColor: "blue",
+  },
+
+  pointer: {
+    cursor: "pointer",
+  },
+
+  MuiInputUnderline: {
+    "&::before": {
+      // remove dotted lines
+      content: "none",
+    },
+  },
+  MuiInputBaseInput: {
+    textAlign: "center",
+  },
+
+  centerBlock: {
+    display: "block",
+    textAlign: "center",
+  },
+  normalizeLink: {
+    color: "inherit",
+    textDecoration: "none",
+    "&:hover": {
+      color: "inherit",
+      textDecoration: "none",
+    },
+  },
+}))
+
+export default function CreateDialog({open, handleClose }) {
   const history = useHistory()
   const [data, setData] = React.useState({
     username: "",
     name: "",
   })
+  const text = React.useRef(null)
 
   const [state, setState] = React.useState({
     created: false,
@@ -74,23 +116,23 @@ export default function CreateDialog({ open, handleClose }) {
     createGroup(data, success, failed)
   }
 
-  const clearGroupID = ()=>{
+  const clearGroupID = () => {
     setState({
-        ...state,
-        created: false,
-        groupId: "",
-      })
-      handleClose()
+      ...state,
+      created: false,
+      groupId: "",
+    })
+    handleClose()
   }
 
-function GroupCreated({ clearGroupID, groupId }) {
+  function GroupCreated({ clearGroupID, groupId }) {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
-  
+
     const handleClickOpen = () => {
       setOpen(true)
     }
-  
+
     return (
       <div>
         <Dialog
@@ -105,15 +147,40 @@ function GroupCreated({ clearGroupID, groupId }) {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <Typography
-                variant="h6"
-                className={clsx(classes.title, classes.centerText)}
-              >
-                {groupId}
-              </Typography>
+              <TextField
+                id="outlined-read-only-input"
+                defaultValue={generateGroupLink(groupId)}
+                disabled
+                onClick={(e) => {
+                  copyToClipboard(text)
+                }}
+                fullWidth={true}
+                multiline
+                inputRef={text}
+                InputProps={{
+                  readOnly: true,
+                  endAdornment: document.queryCommandSupported("copy") && (
+                    <InputAdornment position="end">
+                      <FileCopyIcon />
+                    </InputAdornment>
+                  ),
+                  style: {
+                    cursor: "pointer",
+                    fontWeight: "400",
+                    color: teal["500"],
+                  },
+                  className: classes.MuiInputUnderline,
+                }}
+                className={clsx(classes.pointer, classes.root)}
+              />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
+            <Button onClick={clearGroupID} color="primary">
+              <Link to={JOIN + "/" + groupId} className={classes.normalizeLink}>
+                JOIN GROUP
+              </Link>
+            </Button>
             <Button onClick={clearGroupID} color="primary">
               OK
             </Button>
@@ -122,7 +189,6 @@ function GroupCreated({ clearGroupID, groupId }) {
       </div>
     )
   }
-
 
   return state.created ? (
     <GroupCreated clearGroupID={clearGroupID} groupId={state.groupId} />

@@ -4,26 +4,22 @@ import TextField from "@material-ui/core/TextField"
 import KeyboardIcon from "@material-ui/icons/Keyboard"
 import Button from "@material-ui/core/Button"
 import FormControl from "@material-ui/core/FormControl"
-import img from "../../Img/gifts.jpg"
 import NavBar from "../../components/NavBar"
 import { makeStyles } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import Container from "@material-ui/core/Container"
 import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from "@material-ui/icons/Add"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
-import SendIcon from "@material-ui/icons/Send"
-import GroupIcon from '@material-ui/icons/Group';
+import GroupIcon from "@material-ui/icons/Group"
 
-
-import {storeGroupID} from "../../localStorage/groups"
-import { useHistory } from "react-router-dom";
-import {JOIN,CREATE} from "../../urls"
+// import { storeGroupID } from "../../localStorage/groups"
+import { useHistory } from "react-router-dom"
+import { JOIN } from "../../urls"
 
 import CreateDialog from "../../components/CreateDialog"
-
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -47,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       marginTop: theme.spacing(2),
     },
+    height:"100vh",
     alignItems: "center",
     gap: theme.spacing(2),
   },
@@ -75,13 +72,30 @@ const useStyles = makeStyles((theme) => ({
       width: "50%",
     },
   },
+
   buttonLayout: {
     marginTop: theme.spacing(3),
     display: "flex",
-    justifyContent: "flex-start",
-    gap: theme.spacing(3),
+    width: "100%",
+    justifyContent: "space-evenly",
+    "& > *": {
+      marginRight: theme.spacing(3),
+    },
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
+      "& > *": {
+        marginBottom: theme.spacing(3),
+      },
+    },
+  },
+
+ 
+  split: {
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+    "& > *": {
+      marginLeft: theme.spacing(1),
     },
   },
 
@@ -95,37 +109,52 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles()
-  const [openDialog,setOpenDialog]= React.useState(false)
+
+  const [openDialog, setOpenDialog] = React.useState(false)
+  const [openCloseGroupDialog, setOpenCloseGroupDialog] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [groupId, setGroupId] = useState("")
+
   const open = Boolean(anchorEl)
-  let history = useHistory();
+  let history = useHistory()
+
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  
+  function join (){
+    // verifyGroup 
+    // if groupIsValid do stuff
+    if(groupId){
+    // storeGroupID("groupId", groupId)
+    history.push(JOIN+"/"+groupId)
+    }
+    
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    storeGroupID("groupId",groupId)
-    history.push(JOIN)
+    join()
+    
   }
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget)
   const handleChange = (event) => setGroupId(event.target.value)
 
+
   const handleClickOpen = () => {
     handleClose()
-    console.log(openDialog,"openDialog")
-    setOpenDialog(true);
+    // console.log(openDialog, "openDialog")
+    setOpenDialog(true)
   }
 
   const handleCloseDialgue = () => {
-    setOpenDialog(false);
-  };
+    setOpenDialog(false)
+  }
 
   return (
     <div>
-      <CreateDialog open={openDialog} handleClose={handleCloseDialgue}/>
+      <CreateDialog open={openDialog} handleClose={handleCloseDialgue} />
       <NavBar />
       <Container maxWidth="lg">
         <section className={classes.layout}>
@@ -153,7 +182,6 @@ export default function Home() {
                 size="large"
                 disableElevation
                 onClick={handleMenu}
-            
               >
                 GROUP
               </Button>
@@ -172,7 +200,7 @@ export default function Home() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem  onClick={handleClickOpen}>
+                <MenuItem onClick={handleClickOpen}>
                   <ListItemIcon>
                     <AddIcon fontSize="small" />
                   </ListItemIcon>
@@ -183,32 +211,33 @@ export default function Home() {
                   <ListItemIcon>
                     <GroupIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText primary="Manage Group" />
+                  <ListItemText primary="Close Group" />
                 </MenuItem>
               </Menu>
-              <FormControl className={classes.formWidth} variant="outlined">
-                <form onSubmit={handleSubmit}>
-                  <TextField
-                    label="GROUP ID"
-                    id="outlined-start-adornment"
-                    style={{ width: "100%" }}
-                    value={groupId}
-                    onChange={handleChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <KeyboardIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="outlined"
-                  />
-                </form>
-              </FormControl>
+
+              <div className={classes.split}>
+                <FormControl className={classes.formWidth} variant="outlined">
+                  <form onSubmit={handleSubmit}>
+                    <TextField
+                      label="GROUP ID"
+                      id="outlined-start-adornment"
+                      style={{ width: "100%" }}
+                      value={groupId}
+                      onChange={handleChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <KeyboardIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="outlined"
+                    />
+                  </form>
+                </FormControl>
+                <Button onClick={join}>Join</Button>
+              </div>
             </div>
-          </div>
-          <div className={classes.postion}>
-            <img className={classes.image} src={img} alt="gifts" />
           </div>
         </section>
       </Container>

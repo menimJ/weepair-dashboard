@@ -14,7 +14,7 @@ import { deepOrange } from "@material-ui/core/colors"
 // application imports
 import { addUserToGroup } from "../../api/groups"
 import { getGroupID } from "../../localStorage/groups"
-import { useHistory } from "react-router-dom"
+import { useHistory ,withRouter} from "react-router-dom"
 import { HOME } from "../../urls"
 import Loading from "../../components/Loading"
 import {handleNotification} from "../../utils/general"
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Join() {
+export default function Join(props) {
   const classes = useStyles()
   let history = useHistory()
   const [value, setValue] = React.useState({
@@ -61,6 +61,8 @@ export default function Join() {
     loading: false,
     errorMessage: "",
   })
+
+
 
   const handleUserInput = (name) => (event) =>
     setValue({ ...value, [name]: event.target.value })
@@ -80,7 +82,7 @@ export default function Join() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setValue({ ...value, loading: true })
-    const groupId = getGroupID("groupId")
+    const groupId = props.match.params.id
     if (groupId) {
       const member = {
         username: value.userName,
